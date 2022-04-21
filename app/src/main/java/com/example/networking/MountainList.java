@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MountanList extends AppCompatActivity {
+public class MountainList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
