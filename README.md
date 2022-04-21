@@ -15,8 +15,47 @@ I `activity_main` skapades en __recyclerView__
         />
 ````
 
+I JSON filen `mountain.json` börjar strängen med "[" vilket då betyder att det är en __array__, nästa tecken är ett "{" vilket visar starten på ett objekt, detta tolkas som att det måste finnas en array av objekt i filen, därför skapas först objektet i sig.
+Objectet kommer att innehålla variabler relaterade till berg (enligt JSON-filen) därför döps classen till Mountain. Variabler skapas i klassen som översätts från JSON-filen. notera dock att i klassen skapas en instans av en annan klass, även denna måste skapas.
 
+````
+package com.example.networking;
 
+public class Mountain {
+    private String ID;
+    private String name;
+    private String type;
+    private String company;
+    private String location;
+    private String category;
+    private int size;
+    private int cost;
+    private Auxdata auxdata;       /// detta är ytterligare ett objekt som måste skapas
+
+}
+````
+````
+package com.example.networking;
+
+public class Auxdata {
+    private String wiki;
+    private String img;
+}
+````
+Slutligtviss så skapas den förstnämnda arrayen i `MainActivity`
+
+````
+  private ArrayList<Mountain> mountains;                /// arrayen deklareras och kommer innehålla data av typen Mountain (Klassen som precis skapades) 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mountains = new ArrayList<>();                  /// arrayen initieras som en medlems variabel 
+        new JsonFile(this, this).execute(JSON_FILE);
+    }
+````
 **Skriv din rapport här!**
 
 _Du kan ta bort all text som finns sedan tidigare_.
