@@ -57,7 +57,31 @@ Slutligtviss så skapas den förstnämnda arrayen i `MainActivity`
     }
 ````
 
-En ny android resursfil skapades där en basic layout med textViews implemeterades, denna kommer att användas som en "rad" i recyclerviewn. 
+För att fylla ArrayListen använder vi oss av JSON och GSON, både en internt och en externt JSON kommer att gå igenom en "Unmarshalling" med hjälp av GSON för att omvandlas från en textsträng till objekt.
+
+```
+(i onCreate)
+ new JsonFile(this, this).execute(JSON_FILE);      // intern jason
+        new JsonTask(this).execute(JSON_URL);      // extern url jason
+
+```        
+
+```             
+   @Override
+    public void onPostExecute(String json)
+    {
+        Gson gson = new Gson();                                     // en instans av gson skapas
+
+        Type type = new TypeToken <List<Mountain>>() {}.getType();  //  sedan listan av objekt
+        mountains = gson.fromJson( json, type);                     // 
+        Log.d("MainActivity",json);
+        mountainAdapter.setMountains(mountains);                    // uppdaterar listan i adaptern
+        mountainAdapter.notifyDataSetChanged();                     // meddelar om att den uppdaterats
+
+    }
+```
+En ny android resursfil skapades där en basic layout med textViews implemeterades, denna kommer att användas som en "rad" i recyclerviewn.
+
 
 
 

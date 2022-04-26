@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         setAdapter();
 
-        //        new JsonFile(this, this).execute(JSON_FILE);      // intärn jason
+        new JsonFile(this, this).execute(JSON_FILE);      // intern jason
         new JsonTask(this).execute(JSON_URL);              ///////// extern url jason
 
     }
