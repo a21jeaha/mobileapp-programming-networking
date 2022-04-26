@@ -64,6 +64,7 @@ För att fylla ArrayListen använder vi oss av JSON och GSON, både en internt o
         
         new JsonFile(this, this).execute(JSON_FILE);      // intern jason
         new JsonTask(this).execute(JSON_URL);             // extern url jason
+                                                          // används för att ladda ner JSON stängen. för att detta ska fungera måste tillgång till internet vara aktiverat
 
 ```        
 
@@ -106,12 +107,11 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {                // De Views som valts för recyclerViewn associeras med variabler via deras id.
         private TextView mountainName;
         private TextView mountainUrl;
 
-
-        public ViewHolder(@NonNull View view) {                     // De Views som valts för recyclerViewn associeras med variabler via deras id.
+        public ViewHolder(@NonNull View view) {                    
             super(view);
 
             mountainName = view.findViewById(R.id.mountain_name);
@@ -125,7 +125,6 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
     public RecyclerViewAdapterMountain.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {      // layouten i `list_item` sätts för varje ny rad
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-
 
         return new ViewHolder(itemView);
     }
@@ -148,7 +147,7 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
 }
 
 ````
-En ny android resursfil skapades där en basic layout med textViews implemeterades, denna kommer att användas som en "rad" i recyclerviewn.
+En ny android resursfil skapades där en basic layout med textViews implemeterades, denna kommer att användas som en "rad" i recyclerviewn. dessa textViews kommer att få ny information för varje instans av denna layout
 
 ![](recyclerview.png)
 
