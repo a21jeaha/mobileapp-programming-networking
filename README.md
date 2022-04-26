@@ -56,6 +56,15 @@ Slutligtviss så skapas den förstnämnda arrayen i `MainActivity`
         new JsonFile(this, this).execute(JSON_FILE);
     }
 ````
+
+
+
+
+
+
+
+
+
 **Skriv din rapport här!**
 
 _Du kan ta bort all text som finns sedan tidigare_.

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -14,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private final String JSON_FILE = "mountains.json";
 
     private ArrayList<Mountain> mountains;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapterMountain mountainAdapter;          ////// vad ska man göra med denna ? ?? ? ? ska det stå <mountain>?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,17 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         mountains = new ArrayList<>();
         new JsonFile(this, this).execute(JSON_FILE);
+
+        setAdapter();
+
+    }
+
+    private void setAdapter(){      // write in README
+
+        mountainAdapter = new RecyclerViewAdapterMountain(mountains);
+        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager  layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
