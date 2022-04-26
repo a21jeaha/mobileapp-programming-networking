@@ -32,10 +32,11 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         mountains = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recycler_View);
-        new JsonFile(this, this).execute(JSON_FILE);
-        //new JsonTask(this).onPostExecute(JSON_URL);              ///////// add to README
 
         setAdapter();
+
+        //        new JsonFile(this, this).execute(JSON_FILE);      // intärn jason
+        new JsonTask(this).execute(JSON_URL);              ///////// extern url jason
 
     }
 
@@ -50,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     @Override
     public void onPostExecute(String json)
     {
-        Gson gson = new Gson();
+        Gson gson = new Gson();                                     // en instans av gson skappas sedan skapas objekt (lista av objekt, som hamnar i mountains)
 
         Type type = new TypeToken <List<Mountain>>() {}.getType();
         mountains = gson.fromJson( json, type);
-        Log.d("MainActivity","" + mountains.get(0).getName());
-        //mountainAdapter.setMountains(mountains);
+        Log.d("MainActivity",json);
+        mountainAdapter.setMountains(mountains);                // uppdaterar listan i adaptern
+        mountainAdapter.notifyDataSetChanged();                 // meddelar om att den uppdaterats
+
     }
 
 

@@ -3,6 +3,7 @@ package com.example.networking;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,13 +28,14 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mountainName;
-        private ImageView mountainImage;
+        private WebView mountainImage;
 
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
             mountainName = view.findViewById(R.id.mountain_name);
+            mountainImage = view.findViewById(R.id.mountain_image);
         }
     }
 
@@ -59,7 +61,8 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
         return mountains.size();
     }
 
-//    public void setMountains(ArrayList<Mountain> mountains) {
-//        this.mountains = mountains;
-//    }
+    public void setMountains(ArrayList<Mountain> mountains) {
+        this.mountains = mountains;
+
+    }
 }
