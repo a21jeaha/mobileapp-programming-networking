@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         recyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager  layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mountainAdapter);
     }
 
     @Override
