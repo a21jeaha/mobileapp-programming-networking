@@ -31,7 +31,7 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
         private TextView mountainUrl;
 
 
-        public ViewHolder(@NonNull View view) {
+        public ViewHolder(@NonNull View view) {                     // De Views som valts för recyclerViewn associeras med variabler via deras id.
             super(view);
 
             mountainName = view.findViewById(R.id.mountain_name);
@@ -42,7 +42,7 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
 
     @NonNull
     @Override
-    public RecyclerViewAdapterMountain.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewAdapterMountain.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {  // layouten i `list_item` sätts för varje ny rad
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
 
@@ -51,18 +51,17 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapterMountain.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdapterMountain.ViewHolder holder, int position) {    // De Views som inte är konstanter och är en del av recyclern får innehållet satt här
          Mountain mountain = mountains.get(position);
          holder.mountainName.setText(mountain.getName());
          holder.mountainUrl.setText(mountain.getAuxdata().getWiki());
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount() {  // Den totala storleken av listan
         return mountains.size();
     }
-
-    public void setMountains(ArrayList<Mountain> mountains) {
+    public void setMountains(ArrayList<Mountain> mountains) {      // här sätts innehållet för listan (när den anropas)
         this.mountains = mountains;
 
     }

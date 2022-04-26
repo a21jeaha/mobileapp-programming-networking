@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         setAdapter();
 
-        new JsonFile(this, this).execute(JSON_FILE);      // intern jason
-        new JsonTask(this).execute(JSON_URL);              ///////// extern url jason
+//        new JsonFile(this, this).execute(JSON_FILE);      // intern jason
+        new JsonTask(this).execute(JSON_URL);                    // extern url jason
 
     }
 
@@ -51,9 +51,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     @Override
     public void onPostExecute(String json)
     {
-        Gson gson = new Gson();                                     // en instans av gson skappas sedan skapas objekt (lista av objekt, som hamnar i mountains)
+        Gson gson = new Gson();                                      // en instans av gson skapas
 
-        Type type = new TypeToken <List<Mountain>>() {}.getType();
+        Type type = new TypeToken <List<Mountain>>() {}.getType();   // eftersom att JsonTask använder AsyncTask och således inte kan garanterat köras innan adaptern skapas behöver en setter skapas
+                                                                     // som kan ändra innehållet av listan i efterhand. När det händer behöver adpaptern meddelas om uppdateringen.
         mountains = gson.fromJson( json, type);
         Log.d("MainActivity",json);
         mountainAdapter.setMountains(mountains);                // uppdaterar listan i adaptern

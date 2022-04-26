@@ -1,7 +1,7 @@
 
 # Rapport 5: Networking
 
-I `activity_main` skapades en __recyclerView__  
+I `activity_main` skapades en __recyclerView__, denna associeras sedan med en variabel i `MainActivity` och aktiveras.  
 
 ````
 <androidx.recyclerview.widget.RecyclerView
@@ -60,9 +60,10 @@ Slutligtviss så skapas den förstnämnda arrayen i `MainActivity`
 För att fylla ArrayListen använder vi oss av JSON och GSON, både en internt och en externt JSON kommer att gå igenom en "Unmarshalling" med hjälp av GSON för att omvandlas från en textsträng till objekt.
 
 ```
-(i onCreate)
- new JsonFile(this, this).execute(JSON_FILE);      // intern jason
-        new JsonTask(this).execute(JSON_URL);      // extern url jason
+        //i onCreate, endast en av dessa används åt gången 
+        
+        new JsonFile(this, this).execute(JSON_FILE);      // intern jason
+        new JsonTask(this).execute(JSON_URL);             // extern url jason
 
 ```        
 
@@ -75,56 +76,83 @@ För att fylla ArrayListen använder vi oss av JSON och GSON, både en internt o
         Type type = new TypeToken <List<Mountain>>() {}.getType();  //  sedan listan av objekt
         mountains = gson.fromJson( json, type);                     // 
         Log.d("MainActivity",json);
+                                                                    // eftersom att JsonTask använder AsyncTask och således inte kan garanterat köras innan adaptern skapas behöver en setter skapas 
+                                                                    // som kan ändra innehållet av listan i efterhand. När det händer behöver adpaptern meddelas om uppdateringen. 
+                                                                                
         mountainAdapter.setMountains(mountains);                    // uppdaterar listan i adaptern
         mountainAdapter.notifyDataSetChanged();                     // meddelar om att den uppdaterats
 
     }
 ```
-En ny android resursfil skapades där en basic layout med textViews implemeterades, denna kommer att användas som en "rad" i recyclerviewn.
+En RecyclerView adapter class skapas, och initieras i `MainActivity` denna kommer att agera mellanhand för recyclern och innehållet.
+````
+private void setAdapter(){
+
+        mountainAdapter = new RecyclerViewAdapterMountain(mountains);
+        RecyclerView.LayoutManager  layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mountainAdapter);
+    }
+````
+
+````
+public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerViewAdapterMountain.ViewHolder> {
+
+    ArrayList<Mountain> mountains;
 
 
+    public RecyclerViewAdapterMountain(ArrayList<Mountain> mountains) {
+        this.mountains = mountains;
+    }
 
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView mountainName;
+        private TextView mountainUrl;
 
 
+        public ViewHolder(@NonNull View view) {                     // De Views som valts för recyclerViewn associeras med variabler via deras id.
+            super(view);
+
+            mountainName = view.findViewById(R.id.mountain_name);
+            mountainUrl = view.findViewById(R.id.Url);
+        }
+    }
 
 
-**Skriv din rapport här!**
+    @NonNull
+    @Override
+    public RecyclerViewAdapterMountain.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {      // layouten i `list_item` sätts för varje ny rad
 
-_Du kan ta bort all text som finns sedan tidigare_.
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
 
-## Följande grundsyn gäller dugga-svar:
 
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
+        return new ViewHolder(itemView);
+    }
 
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerViewAdapterMountain.ViewHolder holder, int position) {    // De Views som inte är konstanter och är en del av recyclern får innehållet satt här
+         Mountain mountain = mountains.get(position);
+         holder.mountainName.setText(mountain.getName());
+         holder.mountainUrl.setText(mountain.getAuxdata().getWiki());
+    }
 
-```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+    @Override
+    public int getItemCount() {  // Den totala storleken av listan
+        return mountains.size();
+    }
+    public void setMountains(ArrayList<Mountain> mountains) {      // här sätts innehållet för listan (när den anropas)
+        this.mountains = mountains;
+
     }
 }
-```
 
-Bilder läggs i samma mapp som markdown-filen.
+````
+En ny android resursfil skapades där en basic layout med textViews implemeterades, denna kommer att användas som en "rad" i recyclerviewn.
 
-![](android.png)
+![](recyclerview.png)
 
-Läs gärna:
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+
+
+
