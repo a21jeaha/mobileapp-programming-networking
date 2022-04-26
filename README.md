@@ -57,7 +57,7 @@ Slutligtviss så skapas den förstnämnda arrayen i `MainActivity`
     }
 ````
 
-
+En ny android resursfil skapades där en basic layout med image- och textView implemeterades, denna kommer att användas som en "rad" i recyclerviewn. 
 
 
 

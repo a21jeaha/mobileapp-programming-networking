@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     private ArrayList<Mountain> mountains;
     private RecyclerView recyclerView;
-    private RecyclerViewAdapterMountain mountainAdapter;          ////// vad ska man göra med denna ? ?? ? ? ska det stå <mountain>?
+    private RecyclerViewAdapterMountain mountainAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,11 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         setContentView(R.layout.activity_main);
 
         mountains = new ArrayList<>();
+
+        recyclerView = findViewById(R.id.recycler_View);
         new JsonFile(this, this).execute(JSON_FILE);
-
-
-
-
         //new JsonTask(this).onPostExecute(JSON_URL);              ///////// add to README
+
         setAdapter();
 
     }
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private void setAdapter(){
 
         mountainAdapter = new RecyclerViewAdapterMountain(mountains);
-        recyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager  layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mountainAdapter);
@@ -55,8 +53,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Gson gson = new Gson();
 
         Type type = new TypeToken <List<Mountain>>() {}.getType();
-        List<Mountain> mountains = gson.fromJson( json, type);
+        mountains = gson.fromJson( json, type);
         Log.d("MainActivity","" + mountains.get(0).getName());
+        //mountainAdapter.setMountains(mountains);
     }
 
 
