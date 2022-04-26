@@ -28,14 +28,14 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mountainName;
-        private WebView mountainImage;
+        private TextView mountainUrl;
 
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
             mountainName = view.findViewById(R.id.mountain_name);
-            mountainImage = view.findViewById(R.id.mountain_image);
+            mountainUrl = view.findViewById(R.id.Url);
         }
     }
 
@@ -54,6 +54,7 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull RecyclerViewAdapterMountain.ViewHolder holder, int position) {
          Mountain mountain = mountains.get(position);
          holder.mountainName.setText(mountain.getName());
+         holder.mountainUrl.setText(mountain.getAuxdata().getWiki());
     }
 
     @Override
