@@ -57,7 +57,7 @@ Slutligtviss så skapas den förstnämnda arrayen i `MainActivity`
     }
 ````
 
-För att fylla ArrayListen använder vi oss av JSON och GSON, både en internt och en externt JSON kommer att gå igenom en "Unmarshalling" med hjälp av GSON för att omvandlas från en textsträng till objekt.
+För att fylla ArrayListen använder vi oss av JSON och GSON, både en internt och externt JSON kommer att genomgå en "Unmarshalling" med hjälp av GSON för att omvandlas från en textsträng till ett objekt ( en lista av objekt i denna uppgift).
 
 ```
         //i onCreate, endast en av dessa används åt gången 
