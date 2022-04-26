@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     }
 
-    private void setAdapter(){      // write in README
+    private void setAdapter(){
 
         mountainAdapter = new RecyclerViewAdapterMountain(mountains);
         recyclerView = findViewById(R.id.recyclerView);
