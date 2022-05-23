@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         Type type = new TypeToken <List<Mountain>>() {}.getType();   // eftersom att JsonTask använder AsyncTask och således inte kan garanterat köras innan adaptern skapas behöver en setter skapas
                                                                      // som kan ändra innehållet av listan i efterhand. När det händer behöver adpaptern meddelas om uppdateringen.
+
         mountains = gson.fromJson( json, type);
-        Log.d("MainActivity",json);
         mountainAdapter.setMountains(mountains);                // uppdaterar listan i adaptern
         mountainAdapter.notifyDataSetChanged();                 // meddelar om att den uppdaterats
 

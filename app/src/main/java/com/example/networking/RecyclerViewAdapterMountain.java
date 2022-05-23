@@ -61,6 +61,7 @@ public class RecyclerViewAdapterMountain extends RecyclerView.Adapter<RecyclerVi
     public int getItemCount() {  // Den totala storleken av listan
         return mountains.size();
     }
+
     public void setMountains(ArrayList<Mountain> mountains) {      // här sätts innehållet för listan (när den anropas)
         this.mountains = mountains;
 
